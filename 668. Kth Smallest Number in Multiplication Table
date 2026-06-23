@@ -1,0 +1,32 @@
+class Solution {
+    public int findKthNumber(int m, int n, int k) {
+        int l=1; int h= m*n;
+        int ans=-1;
+
+        while(l<=h){
+            int gus=(l+h)/2;
+            int a = fun(n,m,gus);
+            if(a<k){
+                l= gus+1;
+            }
+            else{
+                ans= gus;
+                h= gus-1;
+            }
+        }
+        return ans;
+    }
+    public int fun(int n, int m, int gus){
+        int r=n; int c=1; int count =0;
+        while(r>=1 && c<=m){
+            if(r*c<=gus){
+                count=count+r;
+                c++;
+            }
+            else{
+                r--;
+            }
+        }
+        return count;
+    }
+}
