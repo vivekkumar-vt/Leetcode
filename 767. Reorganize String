@@ -1,0 +1,55 @@
+class Solution {
+    public String reorganizeString(String s) {
+        class Pair{
+            int first; char second;
+            Pair(int f, char s){
+                first =f; second =s;
+            }
+        }
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)-> {
+            if(a.first != b.first){
+                return b.first - a.first;
+            }
+            return b.second - a.second;
+        });
+        int n= s.length();
+        HashMap<Character,Integer> h = new HashMap<>();
+        for(int i=0;i<n;i++){
+            char ch =s.charAt(i);
+            h.put(ch , h.getOrDefault(ch,0)+1);
+        }
+        for(Map.Entry<Character,Integer> en : h.entrySet()){
+            char word = en.getKey();
+            int freq = en.getValue();
+            Pair curr = new Pair(freq,word);
+            pq.offer(curr);
+        }
+        int seat=0;
+        StringBuilder sb = new StringBuilder();
+        while(!pq.isEmpty()){
+            Pair p1 = pq.poll();
+            if(seat==0 || sb.charAt(seat - 1) !=p1.second){
+                sb.append(p1.second);
+                seat++;
+                p1.first--;
+                if(p1.first>0){
+                    pq.offer(p1);
+                }
+            }else{
+                if(pq.isEmpty()){
+                    return "";
+                }
+                Pair p2 = pq.poll();
+                sb.append(p2.second);
+                seat++;
+                p2.first--;
+                if(p2.first>0){
+                    pq.offer(p2);
+                }
+                pq.offer(p1);
+            }
+        }
+        return sb.toString();
+
+    }
+}
