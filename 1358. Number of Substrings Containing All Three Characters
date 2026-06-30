@@ -1,0 +1,18 @@
+class Solution {
+    public int numberOfSubstrings(String s){
+        int n =s.length();
+        int count[] = new int[3];
+        int l= 0;
+        int ans= 0;
+
+        for(int h= 0; h< n; h++){
+            count[s.charAt(h) - 'a']++;
+            while(count[0]>0 && count[1]>0 && count[2]>0){
+                ans= ans+n - h;
+                count[s.charAt(l) -'a']--;
+                l++;
+            }
+        }
+        return ans;
+    }
+}
