@@ -1,0 +1,50 @@
+class Solution {
+    class Pair{
+        int freq;
+        char ch;
+        Pair(int f, char c){
+            freq = f;
+            ch = c;
+        }
+    }
+
+    public int leastInterval(char[] tasks, int n) {
+        int len = tasks.length;
+        HashMap<Character,Integer> freq = new HashMap<>();
+        HashMap<Character,Integer> loc = new HashMap<>();
+        for(int i=0;i<len;i++){
+            freq.put(tasks[i], freq.getOrDefault(tasks[i],0)+1);
+            loc.put(tasks[i],1);
+        }
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> b.freq - a.freq);
+        for(Map.Entry<Character,Integer> en: freq.entrySet()){
+            pq.offer(new Pair(en.getValue(),en.getKey()));
+        }
+        int seat =1;
+        while(!pq.isEmpty()){
+            ArrayList<Pair> pull = new ArrayList<>();
+        
+            while(!pq.isEmpty()){
+                Pair p = pq.poll();
+                int fr = p.freq;
+                char child = p.ch;
+                if(loc.get(child)<=seat){
+                    if(p.freq>1){
+                        pq.offer(new Pair(p.freq-1,p.ch));
+                    }
+                    loc.put(p.ch,seat+n+1);
+                    break;
+                }
+                else{
+                    pull.add(p);
+                }
+            }
+            for(int i=0;i<pull.size();i++){
+                pq.offer(pull.get(i));
+            }
+            seat++;
+        }
+        return seat-1;
+
+    }
+}
