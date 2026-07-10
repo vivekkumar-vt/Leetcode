@@ -1,0 +1,19 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        ArrayList<String> ans = new ArrayList<>();
+            fun(ans, "", 0, 0, n);
+            return ans;
+        }
+        private void fun(ArrayList<String>ans,String temp,int open,int close,int n){
+            if(open==n && close==n){
+                ans.add(temp);
+                return;
+            }
+            if(open<n){
+                fun(ans,temp+"(",open+1,close,n);
+            }
+            if(close<open){
+                fun(ans,temp +")",open,close+1,n);
+            }
+        }
+}
