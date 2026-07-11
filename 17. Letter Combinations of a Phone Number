@@ -1,0 +1,40 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        HashMap<Character,String> f = new HashMap<>();
+        f.put('2', "abc");
+        f.put('3', "def");
+        f.put('4', "ghi");
+        f.put('5', "jkl");
+        f.put('6', "mno");
+        f.put('7', "pqrs");
+        f.put('8', "tuv");
+        f.put('9', "wxyz");
+        int n= digits.length();
+        int idx=0;
+        String diary="";
+        ArrayList<String> res = new ArrayList<>();
+        if(n==0){
+            return res;
+        }
+        fun(digits, n, idx,diary,res,f);
+        return res;
+    }
+    
+
+    void fun(String s, int n, int idx, String diary, ArrayList<String> res, HashMap<Character, String> f){
+        if(idx==n){
+            res.add(diary);
+            return;
+        }
+
+        String choice = f.get(s.charAt(idx));
+
+        for(int j=0;j<choice.length();j++){
+            
+            fun(s,n,idx+1,diary+choice.charAt(j),res,f);
+            
+        }
+        return;
+    }
+
+}
