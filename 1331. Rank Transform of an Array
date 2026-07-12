@@ -1,0 +1,19 @@
+class Solution {
+    public int[] arrayRankTransform(int[] arr) {
+        int copy[] = arr.clone();
+        Arrays.sort(copy);
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int r=1;
+        int n= arr.length;
+        for(int i=0;i<n;i++){
+            if(!map.containsKey(copy[i])){
+                map.put(copy[i],r++);
+            }
+        }
+        for(int i=0;i<n;i++){
+            arr[i] = map.get(arr[i]);
+        }
+        return arr;
+        
+    }
+}
